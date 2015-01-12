@@ -98,7 +98,7 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
 
 "/>"            {
                     yy_pop_state();
-					htmlStackPop(yytext, 0, yylineno);
+                    htmlStackPop(yytext, 0, yylineno);
                     return END_EMPTY_TAG;
                 }
 
@@ -114,13 +114,13 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
 <endElement>{
 "</"{StarTag}">"    {
                         yy_pop_state();
-					    htmlStackPop(yytext, 1, yylineno);
+                        htmlStackPop(yytext, 1, yylineno);
                         return END_TAG;
                     }
 
 "</"{Name}">"   {
                     yy_pop_state();
-					htmlStackPop(yytext, 1, yylineno);
+                    htmlStackPop(yytext, 1, yylineno);
                     printf("[!!]: unknown tag: '%s' on line: %d \n", yytext, yylineno);
 					setParseError(1);
                     return SYNTAX_ERROR;
@@ -162,7 +162,7 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
                      */
                     yy_pop_state();
                     printf("[!!]: invalid XMLDECL: %s\n", yytext);
-					setParseError(1);
+                    setParseError(1);
                     return SYNTAX_ERROR;
                 }
 }

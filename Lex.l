@@ -58,35 +58,35 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
 
 "<"{StarTag}    {
                     yy_push_state(startElement);
-					removeFirstChar(yytext);
-					printf("[ok]: %s\n", yytext);
-					htmlStackPush(yytext);
+                    removeFirstChar(yytext);
+                    printf("[ok]: %s\n", yytext);
+                    htmlStackPush(yytext);
                     return START_TAG;
                 }
-				
+        
 "<"{Name}       {
                     yy_pop_state();
-					removeFirstChar(yytext);
+                    removeFirstChar(yytext);
                     printf("[!!]: unknown tag: '<%s>' on line: %d \n", yytext, yylineno);
-					setParseError(1);
+                    setParseError(1);
                     return SYNTAX_ERROR;
-                }				
+                }        
 
 <attribute>{
 
-	{StarAtt}{Ws}?[=]  {
-						yyless(yyleng - 1); /* put back the equals sign */
-						printf("[ok]: + %s\n", yytext);
-					}
-	{Name}{Ws}?[=]  {
-						yyless(yyleng - 1); /* put back the equals sign */
-						printf("[ii]: unknown attribute: '%s' on line: %d \n", yytext, yylineno);
-						setParseError(1);
-					}
-	[=]{Ws}?        ;   /* ignore */
-	{AttValue}      {
-						yy_pop_state();
-					}
+  {StarAtt}{Ws}?[=] {
+                         yyless(yyleng - 1); /* put back the equals sign */
+                         printf("[ok]: + %s\n", yytext);
+                    }
+  {Name}{Ws}?[=]    {
+                         yyless(yyleng - 1); /* put back the equals sign */
+                         printf("[ii]: unknown attribute: '%s' on line: %d \n", yytext, yylineno);
+                         setParseError(1);
+                    }
+  [=]{Ws}?          ;   /* ignore */
+  {AttValue}        {
+                         yy_pop_state();
+                    }
 }
 
 
@@ -122,10 +122,10 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
                     yy_pop_state();
                     htmlStackPop(yytext, 1, yylineno);
                     printf("[!!]: unknown tag: '%s' on line: %d \n", yytext, yylineno);
-					setParseError(1);
+                    setParseError(1);
                     return SYNTAX_ERROR;
-                }				
-				
+                }        
+        
 {CharData}      {
                     /* TODO - do a check here to see if we want to preserve
                      * whitespace. If so, keep it all. Otherwise, strip it,
